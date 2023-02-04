@@ -1,0 +1,192 @@
+"""
+Enero 26 de 2023
+ESTUDIANTE: Marco Antonio Riascos Salguero
+Carrera: Ingenieria de sistemas y Computacion
+Asignatura: Estructura de Datos
+CODIGO: 8952273
+"""
+########## Punto 1 ###########################
+#Funcion: verificarDiagonales
+#Entrada: Recibe una matriz cuadrada de numeros enteros
+#Salida: Retorna un valor buliano  
+#Descripcion: Permite verificar la matriz cuadrada que recibe y verifica si la diagonal principal y la diagonal secundria son iguales
+def verificarDiagonales(mat):
+    ans,p, k = True, -1, 0 
+    for i in range (len(mat)):
+        if mat[i][k] == mat[i][p]:
+            p -=1
+            k += 1
+        else: 
+            ans = False
+            i = len(mat)        
+    return ans   
+
+########## Ejercicio 2 ###########################
+#Funcion: esCapicua
+#Entrada: Recibe una llista de numeros enteros 
+#Salida: Retorna un valor buleano que permite verificar si cumple la condicion de la funcion
+#Descripcion: La funcion utiliza un ciclo for que recorre al lista de izquierda a derecha y veseversa,
+# produce un valor buleano si se lee igual en ambos sentidos  
+def esCapicua(list):
+    ans,regresiva = True, -1
+    for i in range(len(list)//2):
+        if list[i] == list[regresiva]:
+            regresiva -=1
+        else:
+            ans = False
+            i = len(list)   
+    return ans        
+
+############### Ejercicio 3a #############################
+#Funcion: diferenciaListas
+#Entrada: Recibe dos listas de enteros 
+#Salida: Retorna una lista con valores enteros 
+#Descripcion: La funcion utiliza un ciclo que verifica si los valores de la lista1 estan en la lista 2, 
+# de no estarlo añade el numero de la lista1 a la lista que retorna y si el numero de la lista1, elimina el diigto igual de la lista2
+def diferenciaListas(listaA,listaB):
+    listaC = []
+    for i in range(len(listaA)):
+        if listaA[i] not in listaB:
+            listaC.append(listaA[i])
+        else:
+            result = listaA[i]
+            listaB.remove(result)
+    return listaC
+
+
+############# Ejercicio #3b  ###############################
+#Funcion: comparacionListas
+#Entrada: Recibe una lista de cadenas 
+#Salida: Retorna una lista de valores enteros
+#Descripcion: la funcion trabaja con un ciclo que accede a las litas y conviete un numero entero de cada posicion
+# y luego añade el valor a la lista que retorna
+
+def convertirEntero(lista):
+    listaEntero = []
+    for j in range(len(lista)):
+            entero = int(lista[j])
+            listaEntero.append(entero)
+    return listaEntero
+
+#Funcion: comparacionListas
+#Entrada: Recibe valores digitado por el usurio en el formato de strings
+#Salida:  Imprime los valores despues de comparalos usando la funcion diferenciasListas
+#Descripcion: La fucnion realiza de operacion de recibir 3 parametros con los cuales
+#se realizan las conversiones a numeros enteros, la comparacion de dos listas y por ultimo impreime el resulatdo con su formato
+
+def comparacionListas():
+    inicial = int(input())
+    for i in range(inicial):
+        line1 = input().split()
+        line2 = input().split()
+        entero1 = convertirEntero(line1)
+        entero2 = convertirEntero(line2)
+        if entero1[0] == len(entero1)-1 and entero2[0] == len(entero2)-1:
+            entero1.remove(entero1[0])
+            entero2.remove(entero2[0])
+            newList = diferenciaListas(entero1,entero2)    
+            for j in range(len(newList)):
+                if j + 1 == len(newList):
+                    print("%d"%(newList[j]))
+                else:    
+                    print("%d, "%(newList[j]),end = "")
+
+############## Ejercicio #4 #######################################
+#Funcion: convertiraCadena
+#Entrada: Recibe una lista de numeros enteros
+#Salida: Retorna una lista de listas con valores enteros
+#Descripcion: Esta funcion permite realizar las operaciones de transformar a cadena diferentes valores enteros,
+#luego los divide y los vuelve a convertir a entero cada digito de las listas
+
+def convertiraCadena(lista):
+    cadena,cadena2 = [], []
+    for k in range(len(lista)):
+        cadena.append(str(lista[k]))
+    for i in range(len(cadena)):
+        subcadena = []
+        for h in range(len(cadena[i])):
+            if len(cadena[i]) < 2:
+                cadena2.append(cadena[i][h])
+            else: 
+                subcadena.append(cadena[i][h])  
+        if len(subcadena) > 0:
+            cadena2.append(subcadena)
+    newlist = []       
+    for g in range(len(cadena2)):
+        lista = []
+        if len(cadena2[g]) < 2:
+            lista.append(int(cadena2[g]))
+            newlist.append(lista)
+        else:
+           newlist.append(convertirEntero(cadena2[g]))
+    return newlist          
+
+#Funcion: mostrarPrimos
+#Entrada: Recibe un parametro, que contiene un nuemro entero
+#Salida: Imprime los resulatdo de los numeros primos entre 1 y el parametro de entrada;ademas de la sumatoria de aquellos 
+#numeros que sumen un numero primo
+#Descripcion: La funcion usa un ciclo que le permite interar entre 1 y el parametro recibido, haceindo una divison entrre los 
+#los numeros a fin de de encontrar los primos; tambien se vale de otras funciones para cambiar de formatos diferentes valores de la funcion
+
+def mostrarPrimos(N):
+    primos,listaSuma = [], []
+    for i in range(1,N+1):
+        j, flag = 1, 0
+        while j < i + 1:
+            if i % j == 0:
+                flag +=1
+            j +=1 
+        if flag == 2:  
+            primos.append(i)   
+    cadena = convertiraCadena(primos)   
+    for k in range(len(cadena)):
+        suma = 0
+        if len(cadena[k]) < 2:
+            if cadena[k][0] in primos:
+                listaSuma.append(primos[k])  
+        else:
+            for g in range(len(cadena[k])):
+                suma += cadena[k][g] 
+            if suma in primos:
+                listaSuma.append(primos[k])          
+    print("Números primos entre 1 y %d:"%(N))   
+    for y in range(len(primos)):
+        if y + 1 == len(primos):
+            print("--> %d"%(primos[y]))
+        else:
+            print("--> %d,"%(primos[y]))
+    print()
+    print("Números entre 1 y %d con suma de dígitos con valor primo:"%(N))   
+    for z in range(len(listaSuma)):
+        if z + 1 == len(listaSuma):
+            print("%d"%(listaSuma[z]))
+        else:
+            print("%d, "%(listaSuma[z]), end = "")
+           
+        
+
+############### Ejercicio 5 ###########################################  
+#Funcion: sumarValoresMatriz
+#Entrada: Recibe un diccionario y una lista de tuplas con valores enteros
+#Salida: Retorna un valor entero de la sumatoria final
+#Descripcion: La fucnion realiza la busqueda de elementos dentro de la matriz, a traves de lleves y verificaciones que hacen que el 
+#programa pueda sumar valores enteros existentes si estan contenidos dentro de la llave; con los que luego realiza una suma que da el valor final
+def sumarValoresMatriz(disp,lista):
+    ans = 0
+    for i in range(len(lista)):
+        key = lista[i][0]
+        verificar = lista[i][1]
+        if key in disp:
+            for h in range(len(disp[key])):
+                if verificar == disp[key][h][0]:
+                    ans += disp[key][h][1]
+    return ans            
+
+
+
+
+
+
+
+
+
